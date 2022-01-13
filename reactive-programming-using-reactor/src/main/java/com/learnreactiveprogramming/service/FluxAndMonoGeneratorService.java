@@ -19,6 +19,14 @@ public class FluxAndMonoGeneratorService {
                 .log();
     }
 
+    public Flux<String> namesFluxMap(){
+
+        return Flux.fromIterable(List.of("alex", "ben", "cloe"))
+                //.map(s -> s.toUpperCase())
+                .map(String::toUpperCase)
+                .log(); //db or remote service call
+    }
+
     public static void main(String[] args) {
 
         FluxAndMonoGeneratorService fluxAndMonoGeneratorService = new FluxAndMonoGeneratorService();

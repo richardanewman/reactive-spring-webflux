@@ -39,4 +39,26 @@ class FluxAndMonoGeneratorServiceTest {
                 .expectNext("ALEX", "BEN", "CLOE")
                 .verifyComplete();
     }
+
+    @Test
+    void namesFluxImmutability() {
+
+        var namesFlux = fluxAndMonoGeneratorService.namesFluxImmutability();
+
+        StepVerifier.create(namesFlux)
+                .expectNext("alex", "ben", "cloe")
+                .verifyComplete();
+    }
+
+    @Test
+    void namesFluxFilter() {
+
+        int stringLength = 3;
+
+        var namesFlux = fluxAndMonoGeneratorService.namesFluxFilter(stringLength);
+
+        StepVerifier.create(namesFlux)
+                .expectNext("4-ALEX", "5-CHLOE")
+                .verifyComplete();
+    }
 }

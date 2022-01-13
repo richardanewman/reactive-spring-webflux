@@ -27,6 +27,24 @@ public class FluxAndMonoGeneratorService {
                 .log(); //db or remote service call
     }
 
+    public Flux<String> namesFluxImmutability(){
+        //demonstrates flux immutability
+        var namesFlux = Flux.fromIterable(List.of("alex", "ben", "cloe"));
+        namesFlux.map(String::toUpperCase);
+
+        return namesFlux;
+    }
+
+
+    public Flux<String> namesFluxFilter(int stringLength){
+        //filter string whose length is greater than 3
+        return Flux.fromIterable(List.of("alex", "ben", "chloe"))
+                .map(String::toUpperCase)
+                .filter(s -> s.length() > stringLength)
+                .map(s -> s.length() + "-" + s) //4-ALEX, 5-CHLOE
+                .log(); //db or remote service call
+    }
+
     public static void main(String[] args) {
 
         FluxAndMonoGeneratorService fluxAndMonoGeneratorService = new FluxAndMonoGeneratorService();

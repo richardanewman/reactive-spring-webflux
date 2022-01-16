@@ -3,6 +3,8 @@ package com.learnreactiveprogramming.service;
 import org.junit.jupiter.api.Test;
 import reactor.test.StepVerifier;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class FluxAndMonoGeneratorServiceTest {
@@ -59,6 +61,51 @@ class FluxAndMonoGeneratorServiceTest {
 
         StepVerifier.create(namesFlux)
                 .expectNext("4-ALEX", "5-CHLOE")
+                .verifyComplete();
+    }
+
+    @Test
+    void namesFluxFlatmap() {
+
+        int stringLength = 3;
+
+        var namesFlux = fluxAndMonoGeneratorService.namesFluxFlatmap(stringLength);
+
+        StepVerifier.create(namesFlux)
+                .expectNext("A", "L", "E", "X", "C", "H", "L", "O", "E")
+                .verifyComplete();
+    }
+
+    @Test
+    void namesFluxFlatmapAsync() {
+        int stringLength = 3;
+
+        var namesFlux = fluxAndMonoGeneratorService.namesFluxFlatmapAsync(stringLength);
+
+        StepVerifier.create(namesFlux)
+//                .expectNext("A", "L", "E", "X", "C", "H", "L", "O", "E")
+                .expectNextCount(9)
+                .verifyComplete();
+    }
+
+    @Test
+    void namesFluxConcatMap() {
+        int stringLength = 3;
+
+        var namesFlux = fluxAndMonoGeneratorService.namesFluxConcatMap(stringLength);
+
+        StepVerifier.create(namesFlux)
+                .expectNext("A", "L", "E", "X", "C", "H", "L", "O", "E")
+                .verifyComplete();
+    }
+
+    @Test
+    void nameMonoFlatMap() {
+
+        var nameMono = fluxAndMonoGeneratorService.nameMonoFlatMap();
+
+        StepVerifier.create(nameMono)
+                .expectNext(List.of("A", "L", "E", "X"))
                 .verifyComplete();
     }
 }
